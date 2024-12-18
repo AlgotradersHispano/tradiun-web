@@ -1,0 +1,61 @@
+---
+import { map } from "astro:schema";
+
+const Feature = [
+    { "title": "Cuenta Auditada",  "tag" : "SIEMPRE ACTUALIZADO" ,"img" : "/images/Featured.png" , "description": "Explora nuestra cuenta auditada como prueba transparente de resultados, brindándote la seguridad y confianza necesarias para operar con bots de alta calidad y rendimiento comprobado." , "href" : "https://www.thebotplace.es/software/Yb5TYE33Xhc03fbjY6SA" },
+    { "title": "Backtesting", "tag" : "ESTRATEGIAS PROBADAS" , "img" : "/images/Backtest.png" , "description": "Accede a nuestros resultados de backtesting detallados, validando el desempeño del bot en distintas condiciones de mercado y asegurando estrategias optimizadas con datos reales y confiables." },
+];
+
+---
+
+<div class="flex flex-col gap-12 xl:gap-16">
+    {
+        Feature.map((feature, index) => (
+            <div class={`flex flex-col gap-6 text-center md:flex-row md:items-center xl:justify-center ${index % 2 !== 0 ? 'md:flex-row-reverse' : ''}`}>
+                <div class="md:w-3/5 xl:px-12 2xl:w-2/4">
+                    <div class="inline-block mb-3">
+                        <p class="bg-tag text-sm text-violet-500 font-semibold py-2 px-4 rounded-xl 2xl:text-lg">{feature.tag}</p>
+                    </div>
+                    <div class="mb-4">
+                        <h2 class="text-4xl font-bold xl:text-5xl 2xl:text-6xl">{feature.title}</h2>
+                    </div>
+                    <div>
+                        <p class="xl:text-lg 2xl:text-xl 2xl:mb-10">{feature.description}</p>
+                    </div>
+                    {
+                        feature.href && (
+                        <div class="my-4">
+                                <a class="color_button px-16 py-3 rounded-md text-white" href={feature.href} target="_blank" rel="noopener noreferrer">Ver</a>
+                        </div>
+                        )
+                    }
+                </div>
+                <div class=" xl:w-5/12">
+                    <div>
+                        <img class="rounded-xl shadow-card md:w-96 md:h-72 xl:h-80 xl:w-full" src={feature.img} alt={feature.title} />
+                    </div>
+                </div>
+            </div>
+        ))
+    }
+</div>
+
+<style>
+    .bg-tag {
+        background-color: #6121af1c;
+    }
+
+.shadow-card {
+        box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.5);
+    }
+
+
+    .color-tag {
+        color: #2a289e ;
+    }
+
+.color_button {
+        background-color: #5003ddf6;
+    } 
+
+</style>

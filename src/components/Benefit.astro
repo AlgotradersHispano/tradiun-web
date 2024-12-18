@@ -1,0 +1,35 @@
+---
+
+const benefits = [
+    { "title" : "Comunidad VIP" , "continue_title" : "en tradiun" , "img" : "/images/vip.png"   ,"description" : "Accede a una comunidad exclusiva donde compartimos estrategias, resultados y oportunidades para llevar tu trading al siguiente nivel." },
+    { "title" : "Soporte y" , "continue_title" : "Acompañamiento"  , "img" : "/images/analytics.png"   ,"description" : "Recibe soporte personalizado y atención directa 1:1 para resolver dudas, ajustar tu bot y optimizar tu operativa en todo momento." },
+    { "title" : "Broker Confiable " ,  "continue_title" : "y Seguro" , "img" : "/images/broker.png"   ,"description" : "Opera con seguridad y obtén hasta un 20% de beneficios adicionales gracias a nuestras alianzas estratégicas." },
+
+]
+
+---
+
+
+
+<div class="grid grid-cols-1 gap-10 md:grid-cols-2  xl:grid-cols-3">
+    {
+        benefits.map((benefit) => (
+            <div class="flex flex-col items-center gap-2 rounded-lg md:items-star">
+                <div class="flex flex-col items-center gap-6 md:flex-row  md:justify-start xl:imtems-start">
+                    <div class="flex">
+                        <img class=" w-14 h-14 "  src={benefit.img} alt={benefit.img} />
+                    </div>
+                    <div class=" flex">
+                        <h3 class="font-bold text-xl text-center 2xl:text-2xl  ">{benefit.title} <br> {benefit.continue_title}</h3>
+                    </div>
+                </div>
+                <div class="">
+                    <p class=" text-center xl:text-lg 2xl:text-xl">{benefit.description}</p>
+
+                </div>
+            </div>
+        ))
+    }
+</div>
+
+
