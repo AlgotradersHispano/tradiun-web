@@ -17,5 +17,6 @@
     s.parentNode.insertBefore(t, s);
   })(window, document, 'script', 'https://connect.facebook.net/en_US/fbevents.js');
 
-  fbq('init', '2415716208598921'); // Reemplaza con tu ID de píxel
+  fbq('init', '575154095141415'); // Reemplaza con tu ID de píxel
   fbq('track', 'PageView'); 
+  fbq('trackCustom', 'CustomButtonClick'); // Evento personalizado
