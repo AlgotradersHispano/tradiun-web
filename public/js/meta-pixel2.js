@@ -19,4 +19,4 @@
 
   fbq('init', '575154095141415'); // Reemplaza con tu ID de píxel
   fbq('track', 'PageView'); 
-  fbq('trackCustom', 'CustomButtonClick'); // Evento personalizado
+
