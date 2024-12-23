@@ -1,0 +1,37 @@
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<main class="relative text-black font-poppins m-auto h-screen flex flex-col justify-center items-center">
+    <div class="relative z-10 flex flex-col justify-center items-center gap-4">
+        <div class="text-center glow-effect">
+            <img class="mt-4 mx-auto w-32" src="/images/LogoTradiun.png" alt=""> <!-- Imagen centrada -->
+            <h2 class="text-4xl font-bold xl:text-5xl">Logra la <span class="custom-text-gradient">RENTABILIDAD</span> en tradiun</h2>
+            <p class="mt-4 text-black">Accede <span class="custom-text-gradient">YA MISMO</span> al portafolio</p> <!-- Texto en negro -->
+        </div>
+        <iframe class=" px-2 w-full xl:w-2/5" src="https://embeds.beehiiv.com/48296859-3d03-49ae-83d2-1787272bfbd3?slim=true" 
+            data-test-id="beehiiv-embed" 
+            height="52"
+            frameborder="0" 
+            scrolling="no" 
+        ></iframe>
+    </div>
+</main>
+</Layout>
+
+<style>
+.custom-text-gradient {
+    background-image: linear-gradient(90deg, #772aff 0%, #39007e 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+img {
+    max-width: 100%; /* Asegura que la imagen sea responsiva */
+    height: auto;
+    display: block; /* Garantiza que se comporte como un bloque */
+    margin: 0 auto; /* Centra horizontalmente */
+}
+
+.glow-effect {
+    filter: drop-shadow(1px 1px 30px rgb(46, 46, 46));
+  }
+</style>

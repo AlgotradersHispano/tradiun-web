@@ -1,0 +1,207 @@
+<div class="calculator">
+    <h2 class="title">Calculadora de GOLDEMON</h2>
+
+    <div class="slider-container">
+        <label for="capital" class="label">Capital Inicial ($): <span id="capital-value">1000</span></label>
+        <input type="range" id="capital" min="100" max="10000" step="100" value="1000" class="slider" />
+    </div>
+
+    <div class="slider-container">
+        <label for="riesgo" class="label">Riesgo (%): <span id="riesgo-value">1</span></label>
+        <input type="range" id="riesgo" min="1" max="5" step="1" value="1" class="slider" />
+    </div>
+
+    <div class="result-container">
+        <h3 class="result-title">Resultados Estimados:</h3>
+        <p class="result-item"><strong>Ganancia Anual Estimada:</strong> <span id="ganancia-anual"></span>%</p>
+        <p class="result-item"><strong>Ganancia Mensual Promedio:</strong> <span id="ganancia-mensual"></span>%</p>
+        <p class="result-item"><strong>Drawdown Máximo Estimado:</strong> <span id="drawdown"></span>%</p>
+    </div>
+
+    <div class="note">
+        Nota: Los cálculos son aproximados y están basados en backtesting del último año. Los resultados pueden variar en función de las condiciones del mercado. El lote mínimo es 0.01, lo que limita las ganancias en capitales bajos.
+    </div>
+</div>
+
+<style>
+    .calculator {
+        max-width: 600px;
+        margin: 40px auto;
+        padding: 20px;
+        border-radius: 12px;
+        background: #ffffff;
+        box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1);
+        font-family: 'Poppins', sans-serif;
+    }
+
+    .title {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #39007e;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .slider-container {
+        margin: 20px 0;
+    }
+
+    .label {
+        font-weight: 600;
+        color: #333;
+        display: block;
+        margin-bottom: 10px;
+    }
+
+    .slider {
+        width: 100%;
+        appearance: none;
+        height: 5px;
+        background: #d9d9d9;
+        border-radius: 5px;
+        outline: none;
+        cursor: pointer;
+    }
+
+    .slider::-webkit-slider-thumb {
+        appearance: none;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        background: #772aff;
+        cursor: pointer;
+    }
+
+    .result-container {
+        margin-top: 20px;
+        padding: 15px;
+        border-radius: 8px;
+        background: #f9f9f9;
+    }
+
+    .result-title {
+        font-size: 1.2rem;
+        font-weight: 600;
+        color: #39007e;
+        margin-bottom: 10px;
+    }
+
+    .result-item {
+        font-size: 0.9rem;
+        color: #555;
+        margin: 5px 0;
+    }
+
+    .note {
+        margin-top: 20px;
+        font-size: 0.9rem;
+        color: #666;
+        text-align: center;
+        line-height: 1.5;
+    }
+</style>
+
+<script>
+    const data = {
+        100: { ganancia: 545, dd: 13.38 },
+        250: { ganancia: { 1: 217, 4: 293, 5: 327 }, dd: { 1: 8.47, 4: 8.36, 5: 9.56 } },
+        500: { ganancia: { 1: 103, 3: 159, 5: 422 }, dd: { 1: 5.43, 3: 5.42, 5: 10.46 } },
+        1000: { ganancia: { 1: 54, 3: 210, 5: 455 }, dd: { 1: 3.23, 3: 7.04, 5: 10.57 } },
+        5000: { ganancia: { 1: 57, 3: 230, 5: 485 }, dd: { 1: 2.61, 3: 7.37, 5: 21.84 } },
+        10000: { ganancia: { 1: 59, 3: 236, 5: 496 }, dd: { 1: 2.79, 3: 7.47, 5: 11.6 } },
+    };
+
+    function interpolar(valor, rangoBajo, rangoAlto, datoBajo, datoAlto) {
+        return datoBajo + (datoAlto - datoBajo) * ((valor - rangoBajo) / (rangoAlto - rangoBajo));
+    }
+
+    function interpolarRiesgo(riesgo, valores) {
+        const keys = Object.keys(valores).map(Number);
+        if (riesgo in valores) return valores[riesgo];
+        if (riesgo < Math.min(...keys)) return valores[keys[0]];
+        if (riesgo > Math.max(...keys)) return valores[keys[keys.length - 1]];
+
+        for (let i = 0; i < keys.length - 1; i++) {
+            if (keys[i] <= riesgo && riesgo <= keys[i + 1]) {
+                return interpolar(riesgo, keys[i], keys[i + 1], valores[keys[i]], valores[keys[i + 1]]);
+            }
+        }
+    }
+
+    function calcularResultados(capital, riesgo) {
+        let ganancia, dd;
+
+        if (capital <= 100) {
+            ganancia = data[100].ganancia * 0.90;
+            dd = data[100].dd * 1.10;
+        } else if (capital <= 250) {
+            const gananciaBajo = data[100].ganancia;
+            const gananciaAlto = interpolarRiesgo(riesgo, data[250].ganancia);
+            const ddBajo = data[100].dd;
+            const ddAlto = interpolarRiesgo(riesgo, data[250].dd);
+
+            ganancia = interpolar(capital, 100, 250, gananciaBajo, gananciaAlto) * 0.90;
+            dd = interpolar(capital, 100, 250, ddBajo, ddAlto) * 1.10;
+        } else if (capital <= 500) {
+            const gananciaBajo = interpolarRiesgo(riesgo, data[250].ganancia);
+            const gananciaAlto = interpolarRiesgo(riesgo, data[500].ganancia);
+            const ddBajo = interpolarRiesgo(riesgo, data[250].dd);
+            const ddAlto = interpolarRiesgo(riesgo, data[500].dd);
+
+            ganancia = interpolar(capital, 250, 500, gananciaBajo, gananciaAlto) * 0.90;
+            dd = interpolar(capital, 250, 500, ddBajo, ddAlto) * 1.10;
+        } else if (capital <= 1000) {
+            const gananciaBajo = interpolarRiesgo(riesgo, data[500].ganancia);
+            const gananciaAlto = interpolarRiesgo(riesgo, data[1000].ganancia);
+            const ddBajo = interpolarRiesgo(riesgo, data[500].dd);
+            const ddAlto = interpolarRiesgo(riesgo, data[1000].dd);
+
+            ganancia = interpolar(capital, 500, 1000, gananciaBajo, gananciaAlto) * 0.90;
+            dd = interpolar(capital, 500, 1000, ddBajo, ddAlto) * 1.10;
+        } else if (capital <= 5000) {
+            const gananciaBajo = interpolarRiesgo(riesgo, data[1000].ganancia);
+            const gananciaAlto = interpolarRiesgo(riesgo, data[5000].ganancia);
+            const ddBajo = interpolarRiesgo(riesgo, data[1000].dd);
+            const ddAlto = interpolarRiesgo(riesgo, data[5000].dd);
+
+            ganancia = interpolar(capital, 1000, 5000, gananciaBajo, gananciaAlto) * 0.90;
+            dd = interpolar(capital, 1000, 5000, ddBajo, ddAlto) * 1.10;
+        } else {
+            const gananciaBajo = interpolarRiesgo(riesgo, data[5000].ganancia);
+            const gananciaAlto = interpolarRiesgo(riesgo, data[10000].ganancia);
+            const ddBajo = interpolarRiesgo(riesgo, data[5000].dd);
+            const ddAlto = interpolarRiesgo(riesgo, data[10000].dd);
+
+            ganancia = interpolar(capital, 5000, 10000, gananciaBajo, gananciaAlto) * 0.90;
+            dd = interpolar(capital, 5000, 10000, ddBajo, ddAlto) * 1.10;
+        }
+
+        return {
+            ganancia_anual: Math.round(ganancia),
+            ganancia_mensual: Math.round(ganancia / 12),
+            drawdown_max: parseFloat(dd.toFixed(2)),
+        };
+    }
+
+    const capitalSlider = document.getElementById("capital");
+    const riesgoSlider = document.getElementById("riesgo");
+
+    function actualizarResultados() {
+        const capital = parseInt(capitalSlider.value);
+        const riesgo = parseInt(riesgoSlider.value);
+
+        const resultados = calcularResultados(capital, riesgo);
+
+        document.getElementById("capital-value").textContent = capital;
+        document.getElementById("riesgo-value").textContent = riesgo;
+        document.getElementById("ganancia-anual").textContent = resultados.ganancia_anual;
+        document.getElementById("ganancia-mensual").textContent = resultados.ganancia_mensual;
+        document.getElementById("drawdown").textContent = resultados.drawdown_max;
+    }
+
+    capitalSlider.addEventListener("input", actualizarResultados);
+    riesgoSlider.addEventListener("input", actualizarResultados);
+
+    // Inicializa resultados al cargar
+    actualizarResultados();
+</script>
