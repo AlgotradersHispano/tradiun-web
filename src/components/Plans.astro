@@ -2,10 +2,10 @@
 // Configuración de los planes
 const plans = [
     { 
-        title: 'Suscripción Mensual', 
-        description: 'Para principiantes del mercado que desean conseguir sus primeras ganancias con el trading algorítmico, ofrecemos:', 
-        price: '$49 /',
-        href: 'https://wa.link/esetzt',
+        title: 'PERSONALIZADO SIMPLE', 
+        description: 'Para sistemas mas simples', 
+        price: '$350 - $700 /',
+        href: '/Simple',
         payment_options: 'Pago Mensual',
         buttonText: 'Lo Quiero!',
         features: [
@@ -13,17 +13,16 @@ const plans = [
             { name: 'Instrucciones de uso', available: true },
             { name: 'Acceso a comunidad', available: true },
             { name: '20% beneficio en broker', available: true },
+            { name: 'Soporte 1-1', available: true },
             { name: 'Cursos introductorios', available: false },
             { name: 'VIP comunidad', available: false },
-            { name: 'Soporte 1-1', available: false },
-            { name: '25% de descuento en futuras compras', available: false },
         ]
     },
     { 
-        title: 'Compra Única', 
-        description: 'Para profesionales del mercado que desean maximizar sus beneficios a largo plazo, ofrecemos:', 
-        price: '$369 /',
-        href: 'https://wa.link/esetzt',
+        title: 'PERSONALIZADO PRO', 
+        description: 'Para sistemas mas complejos', 
+        price: '$ Cotizar /',
+        href: '/Pro',
         payment_options: 'Pago Único',
         buttonText: 'Adquirir',
         features: [
@@ -31,10 +30,9 @@ const plans = [
             { name: 'Instrucciones de uso', available: true },
             { name: 'Acceso a comunidad', available: true },
             { name: '20% beneficio en broker', available: true },
+            { name: 'Soporte 1-1', available: true },
             { name: 'Cursos introductorios', available: true },
             { name: 'VIP comunidad', available: true },
-            { name: 'Soporte 1-1', available: true },
-            { name: '25% de descuento en futuras compras', available: true },
         ]
     },
 ];
@@ -51,8 +49,9 @@ const plans = [
                     <img class="w-16 2xl:w-20" src="/images/LogoTradiun.png" alt="">
                 </div>
                 <h3 class="font-extrabold text-2xl xl:text-3xl">{plan.title}</h3>
+
+                <p class="font-bold text-4xl">{plan.price}</p>
                 <p>{plan.description}</p>
-                <p class="font-bold text-4xl">{plan.payment_options}</p>
                 <div>
                     <p class="font-bold mb-4">Nuestro plan incluye:</p>
                     <ul>
