@@ -1,0 +1,119 @@
+<div class="flex flex-col gap-5 text-center xl:justify-center xl:flex-row 2xl:gap-20">
+    <div class="md:flex md:flex-col md:gap-5 xl:w-2/4">
+        <div>
+            <h1 class="text-[6vw] font-semibold md:text-4xl xl:text-5xl 2xl:text-6xl 2xl:leading-snug">
+                Explora el poder del <span class="bg-tittle"> TRADING </span> <span class="bg-tittle">ALGORITMICO</span> y mejora tu trading
+            </h1>
+        </div>
+        <div class="xl:mt-4">
+            <p class="text-md xl:text-lg 2xl:text-2xl">
+                En Tradiun, te ayudamos a alcanzar la rentabilidad y reducir tu tiempo. Con bots personalizados que operan de forma eficiente, reduces el impacto de las emociones, optimizas tus beneficios y desbloqueas un trading más estable y automatizado.
+            </p>
+        </div>
+    </div>
+    <div class="xl:w-2/4">
+        <img src="/public/images/carrousel06.gif" alt="">
+        <div class="carousel">
+            <div class="carousel-inner">
+                <img src="/images/slide/carrousel01.jpg" alt="Imagen 1">
+                <img src="/images/slide/carrousel02.gif" alt="Imagen 2">
+                <img src="/images/slide/carrousel03.gif" alt="Imagen 3">
+                <img src="/images/slide/carrousel04.gif" alt="Imagen 4">
+                <img src="/images/slide/carrousel05.gif" alt="Imagen 5">
+                <img src="/images/slide/carrousel06.gif" alt="Imagen 6">
+            </div>
+            <button class="prev">￩</button>
+            <button class="next">￫</button>
+        </div>
+        <div class="mt-6 text-center">
+            <a 
+                class="px-12 py-2 color_button hover:bg-blue-600 rounded-md text-white inline-block" 
+                href="/comunidad" 
+                target="_blank" 
+                rel="noopener noreferrer"
+            >
+                Comunidad TRADIUN
+            </a>
+        </div>
+    </div>
+</div>
+
+<style>
+    .bg-tittle {
+        background-image: linear-gradient(90deg, #772aff 0%, #39007e 100%);
+        background-clip: text;
+        -webkit-background-clip: text;
+        color: transparent;
+    }
+
+    .carousel {
+        position: relative;
+        width: 100%;
+        max-width: 600px;
+        margin: auto;
+        overflow: hidden;
+        border-radius: 15px;
+        box-shadow: 0px 0px 20px 0px rgba(47, 0, 85, 0.932);
+    }
+
+    .carousel-inner {
+        display: flex;
+        transition: transform 0.5s ease-in-out;
+        width: 100%;
+    }
+
+    .carousel img {
+        width: 100%;
+        object-fit: cover;
+        flex-shrink: 0;
+    }
+
+    .carousel button {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        background-color: rgba(0, 0, 0, 0.5);
+        color: white;
+        border: none;
+        padding: 10px;
+        cursor: pointer;
+        z-index: 10;
+    }
+
+    .carousel button.prev {
+        left: 10px;
+    }
+
+    .carousel button.next {
+        right: 10px;
+    }
+
+    .color_button {
+        background-color: #5003ddf6;
+    }
+
+    .color_button:hover {
+        background-color: #39007e;
+    }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        let currentIndex = 0;
+        const images = document.querySelectorAll('.carousel img');
+        const carouselInner = document.querySelector('.carousel-inner');
+        const prevButton = document.querySelector('.carousel button.prev');
+        const nextButton = document.querySelector('.carousel button.next');
+
+        const changeImage = (direction) => {
+            currentIndex = (currentIndex + direction + images.length) % images.length;
+            carouselInner.style.transform = `translateX(-${currentIndex * 100}%)`;
+        };
+
+        prevButton.addEventListener('click', () => changeImage(-1));
+        nextButton.addEventListener('click', () => changeImage(1));
+
+        // Auto slide
+        setInterval(() => changeImage(1), 5000);
+    });
+</script>
