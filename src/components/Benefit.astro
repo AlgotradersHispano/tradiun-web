@@ -1,9 +1,9 @@
 ---
 
 const benefits = [
-    { "title" : "Plantilla" , "continue_title" : "Custom Project" , "img" : "/images/vip.png"   ,"description" : "Mi plantilla de Custom Project para que comiences a crear con un solo click." },
-    { "title" : "1:1" , "continue_title" : "personalizado"  , "img" : "/images/analytics.png"   ,"description" : "Chat 1:1 conmigo hasta que logres automatizar tu estrategia." },
-    { "title" : "Sistema " ,  "continue_title" : "Desarrollado" , "img" : "/images/broker.png"   ,"description" : "Tambien obtendras el bot desarrollado con mi proceso, para que logres ganancias desde un principio." },
+    { "title" : "Plantilla" , "continue_title" : "Custom Project" , /*"img" : "" */"description" : "Mi plantilla de Custom Project para que comiences a crear con un solo click." },
+    { "title" : "1:1" , "continue_title" : "Personalizado"  ,"description" : "Chat 1:1 conmigo hasta que logres automatizar tu estrategia." },
+    { "title" : "Sistema " ,  "continue_title" : "Desarrollado" ,"description" : "Tambien obtendras el bot desarrollado con mi proceso, para que logres ganancias desde un principio." },
 
 ]
 
@@ -16,11 +16,9 @@ const benefits = [
         benefits.map((benefit) => (
             <div class="flex flex-col items-center gap-2 rounded-lg md:items-star">
                 <div class="flex flex-col items-center gap-6 md:flex-row  md:justify-start xl:imtems-start">
-                    <div class="flex">
-                        <img class=" w-14 h-14 "  src={benefit.img} alt={benefit.img} />
-                    </div>
+                
                     <div class=" flex">
-                        <h3 class="font-bold text-xl text-center 2xl:text-2xl  ">{benefit.title} <br> {benefit.continue_title}</h3>
+                        <h3 class="font-bold text-3xl text-center 3xl:text-2xl  ">{benefit.title} <br> {benefit.continue_title}</h3>
                     </div>
                 </div>
                 <div class="">
